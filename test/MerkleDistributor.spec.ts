@@ -75,7 +75,6 @@ describe('MerkleDistributor', () => {
 
       it('successful claim', async () => {
         const proof0 = tree.getProof(0, wallet0.address, BigNumber.from(100))
-        console.log(proof0)
         await expect(distributor.claim(0, wallet0.address, 100, proof0, overrides))
           .to.emit(distributor, 'Claimed')
           .withArgs(0, wallet0.address, 100)
