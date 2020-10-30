@@ -5,6 +5,8 @@ import simplejson as json
 # From block: 0xA7DF12 (11001618) Oct-06-2020
 # LPToken: https://etherscan.io/token/0x276e62c70e0b540262491199bc1206087f523
 
+ADDRESS_EXCLUDES = ['0xd12d68fd52b54908547ebc2cd77ec6ebbefd3099'] # MasterVampire/Uniswap Pool
+
 def main(): 
     contract = "0x276e62c70e0b540262491199bc1206087f523af6"
     transfer_hash = "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
@@ -13,6 +15,8 @@ def main():
     
     simple_transfers = []
     for t in balances:
+        if t['address'] in ADDRESS_EXCLUDES:
+            continue
         nt = {}
         nt['address'] = t['address']
         nt['amount'] = t['amount']

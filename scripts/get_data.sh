@@ -26,3 +26,5 @@ echo "Retrieving LP users..."
 python3 get_drc_lp_holders.py > drc_lp.json
 echo "Retrieving DRC hodlers..."
 python3 get_drc_holders.py > drc_hodler.json
+echo "Retrieving LP in contract holders..."
+node getDrcEthLpHolders.js

@@ -1,6 +1,6 @@
 const fs = require("fs");
 const Web3 = require("web3");
-const MAINNET = "infure_link";
+const MAINNET = "https://mainnet.infura.io/v3/" + process.env.INFURA_KEY;
 
 const httpProvider = new Web3.providers.HttpProvider(MAINNET);
 const web3 = new Web3(httpProvider);
@@ -10,7 +10,7 @@ const pairContract = new web3.eth.Contract(JSON.parse(pairAbi));
 pairContract.setProvider(httpProvider);
 pairContract.options.address = "0x276e62c70e0b540262491199bc1206087f523af6";
 
-const users = JSON.parse(fs.readFileSync('../data/drc_users.json', { encoding: 'utf8' }));
+const users = JSON.parse(fs.readFileSync('drc_user.json', { encoding: 'utf8' }));
 
 main();
 
@@ -26,12 +26,13 @@ async function main() {
       if (Number(lpBalance) > 0) {
         balances.push({
           address: uniqueUsers[i],
-          amount: lpBalance
+          amount: Web3.utils.fromWei(lpBalance),
+          reasons: 'lp'
         })
       }
     }
     
-    fs.writeFileSync("../data/lp_on_contract_holders.json", JSON.stringify(balances))
+    fs.writeFileSync("lp_on_contract_holders.json", JSON.stringify(balances))
     process.exit()
 }
 

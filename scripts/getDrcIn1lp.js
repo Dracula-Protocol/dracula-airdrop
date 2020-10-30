@@ -1,7 +1,7 @@
 const fs = require("fs");
 const Web3 = require("web3");
 const BigNumber = require('bignumber.js');
-const MAINNET = 'infura_link';
+const MAINNET = "https://mainnet.infura.io/v3/" + process.env.INFURA_KEY;
 
 const httpProvider = new Web3.providers.HttpProvider(MAINNET);
 let web3 = new Web3(httpProvider);
