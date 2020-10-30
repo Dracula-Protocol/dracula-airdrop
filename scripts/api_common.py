@@ -14,28 +14,31 @@ def get_rpc_response(method, params=[]):
     response = requests.post(url, headers=headers, json=data)
     return response.json()
 
+def get_paginated_data(address, from_block, to_block, topics):
+    params = [{"address": address, "fromBlock": from_block, "toBlock": to_block, "topics": topics}]
+    response = get_rpc_response("eth_getLogs", params)
+    if 'error' in response:
+        if response['error']['code'] == -32005:
+            mid_block = (int(from_block, 16) + int(to_block, 16)) >> 1
+            arr1 = get_paginated_data(address, from_block, hex(mid_block), topics)
+            arr2 = get_paginated_data(address, hex(mid_block + 1), to_block, topics)
+            return arr1 + arr2
+        else:
+            print(response['error'])
+        return []
+    return response['result']
+
 def get_contract_logs(address, decimals=18, from_block=None, to_block=None, topics=[]):
     """Get logs of a contract"""
     from_block = from_block or "0x0"
-    to_block = to_block or "latest"
-    params = [{"address": address, "fromBlock": from_block, "toBlock": to_block, "topics": topics}]
-    logs = get_rpc_response("eth_getLogs", params)['result']
+    if to_block == 'latest':
+        to_block = None
+    to_block = to_block or get_rpc_response("eth_blockNumber")['result']
+    logs = get_paginated_data(address, from_block, to_block, topics)
     decimals_factor = Decimal("10") ** Decimal("-{}".format(decimals))
     for log in logs:
         log["amount"] = Decimal(str(int(log["data"], 16))) * decimals_factor
-        log["from"] = log["topics"][1][0:2] + log["topics"][1][26:]
-        log["to"] = log["topics"][2][0:2] + log["topics"][2][26:]
-    return logs
-
-def get_contract_transfers(address, decimals=18, from_block=None, to_block=None, topics=[]):
-    """Get logs of Transfer events of a contract"""
-    from_block = from_block or "0x0"
-    to_block = to_block or "latest"
-    params = [{"address": address, "fromBlock": from_block, "toBlock": to_block, "topics": topics}]
-    logs = get_rpc_response("eth_getLogs", params)['result']
-    decimals_factor = Decimal("10") ** Decimal("-{}".format(decimals))
-    for log in logs:
-        log["amount"] = Decimal(str(int(log["data"], 16))) * decimals_factor
+        #log["amount"] = Decimal(str(int(log["data"], 16)))
         log["from"] = log["topics"][1][0:2] + log["topics"][1][26:]
         log["to"] = log["topics"][2][0:2] + log["topics"][2][26:]
     return logs

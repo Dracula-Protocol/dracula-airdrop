@@ -2,7 +2,8 @@
 
 export INFURA_KEY=$1
 # Hexidecimal block number for end of airdrop range
-export TO_BLOCK="0xA86AEB"
+export TO_BLOCK=$2
+#"0xA86AEB"
 
 if [ -z "$INFURA_KEY" ]
 then
@@ -10,8 +11,18 @@ then
 	exit 1
 fi
 
+if [ -z "$TO_BLOCK" ]
+then
+	echo "Error: To block not set"
+	exit 1
+fi
+
 echo "INFURA Key: $INFURA_KEY"
 echo "To Block: $TO_BLOCK"
 
-python3 get_drc_users.py > drc_users.json
-python3 get_drc_lp_holders.py > drc_lp_holders.json
+echo "Retrieving DRC users..."
+python3 get_drc_users.py > drc_user.json
+echo "Retrieving LP users..."
+python3 get_drc_lp_holders.py > drc_lp.json
+echo "Retrieving DRC hodlers..."
+python3 get_drc_holders.py > drc_hodler.json

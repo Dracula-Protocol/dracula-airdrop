@@ -12,11 +12,18 @@ def main():
     deposit_hash = "0x90890809c654f11d6e72a28fa60149770a0d11ec6c92319d6ceb2bb0a4ea1a15"
     transfers = get_contract_logs(contract, from_block="0xA7DF12", to_block=TO_BLOCK, topics=[deposit_hash])
 
+    dupe_set = set()
     simple_transfers = []
     for t in transfers:
+        if t['from'] in dupe_set:
+            continue
+        if t['amount'] <= 0:
+            continue
+        dupe_set.add(t['from'])
         nt = {}
         nt['address'] = t['from']
         nt['amount'] = t['amount']
+        nt['reasons'] = 'user'
         simple_transfers.append(nt)
 
     print(json.dumps(simple_transfers, sort_keys=True, indent=4))

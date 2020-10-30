@@ -51,6 +51,7 @@ export function parseBalanceMap(balances: OldFormat | NewFormat[]): MerkleDistri
     const flags = {
       isLP: reasons.includes('lp'),
       isUser: reasons.includes('user'),
+      isHodler: reasons.includes('hodler')
     }
 
     memo[parsed] = { amount: parsedNum, ...(reasons === '' ? {} : { flags }) }

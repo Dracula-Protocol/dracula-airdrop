@@ -25,22 +25,19 @@ Copy `.env.example` to `.env` and update variables
 
 ```
 ./scripts/get_data.sh <INFURA_PROJECT_ID>
-npm run generate-lp-address-list -- --amount <airdrop amount>
-npm run generate-user-address-list -- --amount <airdrop amount>
+npm run generate-address-list -- --amount <total airdrop amount> -b <drc-per-lp-token>
 ```
 
 ## Build Merkle
 
 ```
-npm run generate-merkle-root -- --input data/drc_users.json --output data/merkle_users.json
-npm run generate-merkle-root -- --input data/drc_lp_holders.json --output data/merkle_lp.json
+npm run generate-merkle-root -- --input data/address-list.json --output data/merkle_data.json
 ```
 
 ## Verify Merkle
 
 ```
-npm run verify-merkle-root -- --input data/merkle_users.json
-npm run verify-merkle-root -- --input data/merkle_lp.json
+npm run verify-merkle-root -- --input data/merkle_data.json
 ```
 
 ## Deploy

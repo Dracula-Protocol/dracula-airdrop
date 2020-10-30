@@ -10,7 +10,16 @@ def main():
     transfer_hash = "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
     transfers = get_contract_logs(contract, from_block="0xA7DF12", topics=[transfer_hash])
     balances = get_balances_list(transfers)
-    print(json.dumps(balances, sort_keys=True, indent=4))
+    
+    simple_transfers = []
+    for t in balances:
+        nt = {}
+        nt['address'] = t['address']
+        nt['amount'] = t['amount']
+        nt['reasons'] = 'lp'
+        simple_transfers.append(nt)
+
+    print(json.dumps(simple_transfers, sort_keys=True, indent=4))
 
 if __name__ == "__main__":
     main()
