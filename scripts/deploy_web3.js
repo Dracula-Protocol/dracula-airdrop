@@ -4,7 +4,7 @@ let Web3 = require("web3");
 let adminKey = fs.readFileSync('admin.key').toString();
 const network = JSON.parse(fs.readFileSync('network-constants.json', { encoding: 'utf8' }))
 
-const httpProvider = new Web3.providers.HttpProvider(network.mainnet_fork);
+const httpProvider = new Web3.providers.HttpProvider(network.mainnet);
 let web3 = new Web3(httpProvider);
 
 const account = web3.eth.accounts.privateKeyToAccount(adminKey);
@@ -17,13 +17,13 @@ const DRC_ADDRESSS = '0xb78b3320493a4efaa1028130c5ba26f0b6085ef8';
 
 async function main() {
   const drcDistributor = await deployDistributor('DRC_AIRDROP', 'data/merkle_data.json');
-  const uniDistributor = await deployDistributor('UNI_AIRDROP', 'data/uni_merkle_data.json');
+  // const uniDistributor = await deployDistributor('UNI_AIRDROP', 'data/uni_merkle_data.json');
 
   const result = {
     drcDistributor: drcDistributor.options.address,
-    uniDistributor: uniDistributor.options.address,
+    // uniDistributor: uniDistributor.options.address,
   }
-  fs.writeFileSync("deploy-result.json", JSON.stringify(result))
+  fs.writeFileSync("drc-deploy-result.json", JSON.stringify(result))
 }
 
 async function deployDistributor(name, json_path) {

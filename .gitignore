@@ -22,3 +22,5 @@ admin.key
 network-constants.json
 deploy-result.json
 bin
+drc-deployment-sequence.md
+uni-deployment-sequence.md

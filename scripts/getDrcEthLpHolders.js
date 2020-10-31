@@ -31,7 +31,7 @@ async function main() {
         })
       }
     }
-    
+    console.log('lp holders lenght:', balances.length)
     fs.writeFileSync("lp_on_contract_holders.json", JSON.stringify(balances))
     process.exit()
 }

@@ -12,6 +12,7 @@
     "test": "npx buidler test",
     "generate-merkle-root": "ts-node scripts/generate-merkle-root.ts",
     "verify-merkle-root": "ts-node scripts/verify-merkle-root.ts",
+    "verivy-amounts": "node scripts/checkMerkleAmounts.js",
     "generate-address-list": "ts-node scripts/generate-address-list.ts -i scripts/drc_user.json -j scripts/drc_lp.json -k scripts/drc_hodler.json -o data/address-list.json",
     "generate-uni-address-list": "ts-node scripts/generate-uni-address-list.ts -i scripts/uni-addresses.json -o data/uni-address-list.json -u user",
     "deploy:ganache": "npm run build && npx buidler run --network ganache scripts/deploy.js",

@@ -43,6 +43,12 @@ npm run verify-merkle-root -- --input data/merkle_data.json
 npm run verify-merkle-root -- --input data/uni_merkle_data.json
 ```
 
+## Verify Amounts
+
+```
+npm run verivy-amounts
+```
+
 ## Deploy
 
 Mainnet
