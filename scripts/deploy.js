@@ -18,7 +18,8 @@ async function deployDistributor(name, json_path) {
 }
 
 async function main() {
-  await deployDistributor('User', 'data/merkle_data.json');
+  await deployDistributor('DRC', 'data/merkle_data.json');
+  await deployDistributor('UNI', 'data/uni_merkle_data.json');
 }
 
 main()
