@@ -1,4 +1,5 @@
 import { program } from 'commander'
+import { BigNumber, utils } from 'ethers';
 import fs from 'fs'
 
 program
@@ -29,11 +30,11 @@ if (typeof json_input !== 'object') {
 }
 
 type Format = { address: string; earnings: string; reasons: string }
-
+const AMOUNT_IN_WEI = utils.parseUnits(program.amount).toHexString();
 const json_output: Format[] = json_input.map(
   (item: string): Format => ({
     address: item,
-    earnings: `0x${(program.amount).toString(16)}`,
+    earnings: AMOUNT_IN_WEI,
     reasons: program.usertype,
   })
 );

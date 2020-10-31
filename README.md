@@ -26,7 +26,7 @@ Copy `.env.example` to `.env` and update variables
 ```
 ./scripts/get_data.sh <INFURA_PROJECT_ID> <to-block-hex>
 npm run generate-address-list -- --amount <total airdrop amount> -b <drc-per-lp-token>
-npm run generate-uni-address-list -- --amount <total airdrop amount>
+npm run generate-uni-address-list -- --amount <amount per account>
 ```
 
 ## Build Merkle

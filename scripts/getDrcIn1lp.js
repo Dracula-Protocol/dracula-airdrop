@@ -1,9 +1,9 @@
 const fs = require("fs");
 const Web3 = require("web3");
 const BigNumber = require('bignumber.js');
-const MAINNET = "https://mainnet.infura.io/v3/" + process.env.INFURA_KEY;
+const network = JSON.parse(fs.readFileSync('../network-constants.json', { encoding: 'utf8' }))
 
-const httpProvider = new Web3.providers.HttpProvider(MAINNET);
+const httpProvider = new Web3.providers.HttpProvider(network.mainnet);
 let web3 = new Web3(httpProvider);
 
 let pairAbi = fs.readFileSync('../abi/IUniswapV2Pair.abi')
@@ -22,7 +22,7 @@ async function getDrcInLp() {
     const totalSupply = await pairContract.methods.totalSupply().call();
     
     const drcIn1lp = bn(drcReserve).div(bn(totalSupply))
-    console.log('drcIn1lp', drcIn1lp.toFixed(10))
+    console.log('drcIn1lp', drcIn1lp.times(1.5).toFixed(10))
     process.exit()
 }
 

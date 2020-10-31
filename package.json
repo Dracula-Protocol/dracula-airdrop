@@ -16,7 +16,7 @@
     "generate-uni-address-list": "ts-node scripts/generate-uni-address-list.ts -i scripts/uni-addresses.json -o data/uni-address-list.json -u user",
     "deploy:ganache": "npm run build && npx buidler run --network ganache scripts/deploy.js",
     "deploy:ganachelocal": "npm run build && npx buidler run --network localhost scripts/deploy.js",
-    "deploy": "npm run build && npx buidler run --network mainnet scripts/deploy.js"
+    "deploy": "npm run build && node scripts/deploy_web3.js"
   },
   "keywords": [],
   "author": "",
